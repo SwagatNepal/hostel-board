@@ -1,0 +1,525 @@
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --paper: #EDE7D6;
+  --paper-deep: #E2DAC4;
+  --card: #FBF8F0;
+  --ink: #23303D;
+  --ink-soft: #5B6672;
+  --line: #C9BFA0;
+  --gold: #C6912E;
+  --gold-dark: #9C7220;
+  --teal: #2E6B5E;
+  --teal-dark: #204B41;
+  --danger: #A8442F;
+  --radius-card: 3px;
+  --shadow-card: 0 6px 14px rgba(35, 48, 61, 0.18), 0 1px 0 rgba(35, 48, 61, 0.06);
+  --font-display: "Special Elite", "Courier New", monospace;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.35), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(0,0,0,0.03), transparent 40%);
+  min-height: 100vh;
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: normal;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+}
+
+button { font-family: inherit; }
+
+/* ============================================================
+   MASTHEAD
+   ============================================================ */
+.masthead {
+  background: var(--card);
+  border-bottom: 3px double var(--ink);
+  padding: 28px 24px 0;
+}
+
+.masthead-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 22px;
+}
+
+.stamp {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--danger);
+  border-radius: 50%;
+  color: var(--danger);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-14deg);
+  opacity: 0.55;
+  letter-spacing: 1px;
+}
+
+.title-block h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+}
+
+.tagline {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  max-width: 46ch;
+}
+
+.tabs {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  gap: 6px;
+}
+
+.tab {
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 11px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  position: relative;
+  top: 1px;
+}
+
+.tab.is-active {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
+  border-bottom: 1px solid var(--paper);
+}
+
+.tab:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+.panel[hidden] { display: none; }
+
+.board-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .board-layout { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   FORM CARD
+   ============================================================ */
+.index-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 22px;
+}
+
+.form-card h2 {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+}
+
+.card-hint {
+  margin: 0 0 18px;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+form label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin: 14px 0 5px;
+}
+
+form label:first-of-type { margin-top: 0; }
+
+.optional {
+  font-weight: 400;
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+input[type="text"],
+input[type="search"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+}
+
+textarea { resize: vertical; }
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--teal);
+}
+
+.btn-pin {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--gold);
+  color: #2A1E06;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.94rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.btn-pin:hover { background: var(--gold-dark); }
+.btn-pin:active { transform: translateY(1px); }
+
+.btn-pin--alt { background: var(--teal); color: #fff; }
+.btn-pin--alt:hover { background: var(--teal-dark); }
+
+/* rating stars in form */
+.rating-field {
+  border: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.rating-field legend {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 0;
+  margin-bottom: 6px;
+}
+
+.stars { display: flex; gap: 4px; }
+
+.star {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--line);
+  cursor: pointer;
+  padding: 2px;
+}
+
+.star.is-filled { color: var(--gold); }
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+.board-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.board-toolbar input[type="search"],
+.board-toolbar select {
+  flex: 1 1 240px;
+}
+
+.toolbar-stats {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   CORKBOARD + NOTICE CARDS
+   ============================================================ */
+.corkboard {
+  background-color: #A9764B;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(0,0,0,0.12) 0, transparent 3%),
+    radial-gradient(circle at 65% 15%, rgba(0,0,0,0.10) 0, transparent 3%),
+    radial-gradient(circle at 40% 70%, rgba(0,0,0,0.1) 0, transparent 3%),
+    radial-gradient(circle at 85% 60%, rgba(0,0,0,0.1) 0, transparent 3%),
+    radial-gradient(circle at 25% 85%, rgba(0,0,0,0.1) 0, transparent 3%);
+  border-radius: 8px;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 22px;
+  min-height: 120px;
+}
+
+.notice-card {
+  background: var(--card);
+  border-radius: 2px;
+  box-shadow: var(--shadow-card);
+  padding: 16px 14px 14px;
+  position: relative;
+  transform: rotate(var(--tilt, -1deg));
+}
+
+.notice-card::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #E8574A, #A8271C 70%);
+  box-shadow: 0 2px 3px rgba(0,0,0,0.4);
+}
+
+.notice-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 6px 0 8px;
+  color: var(--ink);
+}
+
+.notice-card p {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.notice-meta {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  border-top: 1px dashed var(--line);
+  padding-top: 8px;
+  margin-top: 10px;
+}
+
+.notice-meta strong { color: var(--ink); }
+
+.notice-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.notice-actions button {
+  flex: 1;
+  font-size: 0.78rem;
+  padding: 7px 8px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.notice-actions button:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+.notice-card.is-claimed {
+  opacity: 0.55;
+}
+
+.notice-card.is-claimed h3::after {
+  content: " — claimed";
+  font-size: 0.75rem;
+  color: var(--teal-dark);
+  font-family: var(--font-body);
+}
+
+/* ============================================================
+   COMPLAINT LIST
+   ============================================================ */
+.complaint-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.complaint-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--teal);
+  border-radius: 4px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.complaint-item[data-category="Maintenance"] { border-left-color: #A8442F; }
+.complaint-item[data-category="Food"]        { border-left-color: #C6912E; }
+.complaint-item[data-category="Cleanliness"] { border-left-color: #2E6B5E; }
+.complaint-item[data-category="Wifi"]        { border-left-color: #3B6EA5; }
+.complaint-item[data-category="Noise"]       { border-left-color: #7A4FA0; }
+.complaint-item[data-category="Other"]       { border-left-color: #8A8A8A; }
+
+.complaint-item.is-resolved { opacity: 0.6; }
+
+.complaint-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.complaint-category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ink-soft);
+}
+
+.complaint-date {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+.complaint-message {
+  margin: 8px 0;
+  font-size: 0.93rem;
+  color: var(--ink);
+}
+
+.complaint-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.complaint-author {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.complaint-rating {
+  color: var(--gold);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.complaint-status-btn {
+  font-size: 0.76rem;
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.complaint-status-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+/* ============================================================
+   MISC
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  padding: 30px 10px;
+}
+
+.board-footer {
+  text-align: center;
+  padding: 18px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.toast {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--card);
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* dark mode support for viewers with a dark OS preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1E1B16;
+    --paper-deep: #16130F;
+    --card: #2A251E;
+    --ink: #EFE9DC;
+    --ink-soft: #B4AA97;
+    --line: #4A4335;
+  }
+  .corkboard { background-color: #4A3625; }
+  input[type="text"], input[type="search"], textarea, select {
+    background: #201C16;
+    color: var(--ink);
+  }
+  .complaint-status-btn, .notice-actions button { background: #201C16; }
+}

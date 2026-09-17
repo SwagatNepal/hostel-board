@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hostel Board — Lost &amp; Found and Feedback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="stamp" aria-hidden="true">EST.</div>
+    <div class="title-block">
+      <h1>The Hostel Board</h1>
+      <p class="tagline">Found something? Lost something? Got something to say? Pin it here.</p>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Board sections">
+    <button class="tab is-active" id="tab-lostfound" role="tab" aria-selected="true" aria-controls="panel-lostfound" data-target="lostfound">
+      Lost &amp; Found
+    </button>
+    <button class="tab" id="tab-complaints" role="tab" aria-selected="false" aria-controls="panel-complaints" data-target="complaints">
+      Complaints &amp; Feedback
+    </button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- LOST & FOUND -->
+  <section id="panel-lostfound" class="panel is-active" role="tabpanel" aria-labelledby="tab-lostfound">
+
+    <div class="board-layout">
+
+      <div class="form-column">
+        <div class="index-card form-card">
+          <h2>Report a found item</h2>
+          <p class="card-hint">Found something lying around? Let its owner know where to claim it.</p>
+          <form id="lostfound-form" novalidate>
+            <label for="lf-item">Item</label>
+            <input type="text" id="lf-item" placeholder="e.g. Blue water bottle" required maxlength="60">
+
+            <label for="lf-desc">Description</label>
+            <textarea id="lf-desc" placeholder="Colour, brand, any marks that would help someone recognise it" rows="3" required maxlength="300"></textarea>
+
+            <label for="lf-location">Where you found it</label>
+            <input type="text" id="lf-location" placeholder="e.g. Common room, near the TV" required maxlength="80">
+
+            <label for="lf-contact">Your name or room number</label>
+            <input type="text" id="lf-contact" placeholder="e.g. Priya, Room 214" required maxlength="60">
+
+            <button type="submit" class="btn-pin">Pin this notice</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="board-column">
+        <div class="board-toolbar">
+          <input type="search" id="lf-search" placeholder="Search by item, location, or who found it…" aria-label="Search found items">
+          <div class="toolbar-stats" id="lf-stats">0 items pinned</div>
+        </div>
+
+        <div class="corkboard" id="lostfound-board" aria-live="polite">
+          <!-- notice cards injected here -->
+        </div>
+
+        <p class="empty-state" id="lf-empty" hidden>Nothing pinned yet. Be the first to report a found item.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPLAINTS & FEEDBACK -->
+  <section id="panel-complaints" class="panel" role="tabpanel" aria-labelledby="tab-complaints" hidden>
+
+    <div class="board-layout">
+
+      <div class="form-column">
+        <div class="index-card form-card">
+          <h2>Raise a complaint or leave feedback</h2>
+          <p class="card-hint">Tell the warden's office what's working and what isn't.</p>
+          <form id="complaint-form" novalidate>
+            <label for="c-category">Category</label>
+            <select id="c-category" required>
+              <option value="" disabled selected>Choose a category</option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Food">Food &amp; Mess</option>
+              <option value="Cleanliness">Cleanliness</option>
+              <option value="Wifi">Wi-Fi &amp; Utilities</option>
+              <option value="Noise">Noise &amp; Conduct</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <label for="c-message">What's going on</label>
+            <textarea id="c-message" placeholder="Describe the issue, or share feedback on something the hostel did well" rows="4" required maxlength="400"></textarea>
+
+            <label for="c-name">Your name or room number <span class="optional">(optional)</span></label>
+            <input type="text" id="c-name" placeholder="Leave blank to stay anonymous" maxlength="60">
+
+            <fieldset class="rating-field">
+              <legend>How would you rate this?</legend>
+              <div class="stars" id="c-stars" role="radiogroup" aria-label="Rating">
+                <button type="button" class="star" data-value="1" aria-label="1 star">★</button>
+                <button type="button" class="star" data-value="2" aria-label="2 stars">★</button>
+                <button type="button" class="star" data-value="3" aria-label="3 stars">★</button>
+                <button type="button" class="star" data-value="4" aria-label="4 stars">★</button>
+                <button type="button" class="star" data-value="5" aria-label="5 stars">★</button>
+              </div>
+              <input type="hidden" id="c-rating" value="0">
+            </fieldset>
+
+            <button type="submit" class="btn-pin btn-pin--alt">Submit to the office</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="board-column">
+        <div class="board-toolbar">
+          <select id="c-filter" aria-label="Filter by category">
+            <option value="all">All categories</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Food">Food &amp; Mess</option>
+            <option value="Cleanliness">Cleanliness</option>
+            <option value="Wifi">Wi-Fi &amp; Utilities</option>
+            <option value="Noise">Noise &amp; Conduct</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="toolbar-stats" id="c-stats">0 entries · 0 open</div>
+        </div>
+
+        <ul class="complaint-list" id="complaint-list" aria-live="polite">
+          <!-- complaint entries injected here -->
+        </ul>
+
+        <p class="empty-state" id="c-empty" hidden>No entries yet. The suggestion box is empty.</p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="board-footer">
+  <p>Entries are stored on this device only, in your browser. Clearing site data will clear the board.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
